@@ -32,7 +32,7 @@ pss <- function(client, model, stratum, trimming){
   # vtg::log$debug(typeof(pr_scores))
   
   prs = c()
-  for (elem in done) {
+  for (elem in pr_scores) {
     prs <- c(prs, elem[[1]])
   }
   
