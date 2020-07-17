@@ -8,7 +8,7 @@ RPC_strata <- function(df, quantiles, stratum){
   
   x <- 1
   repeat {
-    df$strata[df$pr_score >= quantiles[x] & df$pr_score < quantiles[x+1]] <- x
+    df$strata[df$pr_score >= quantiles[x] & df$pr_score <= quantiles[x+1]] <- x
     x <- x+1
     if(x > stratum){
       break

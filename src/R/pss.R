@@ -9,6 +9,14 @@ pss <- function(client, model, stratum, trimming){
     image.name,
     task.name <- "PSS"
   )
+  
+  # Run in a MASTER container
+  if (client$use.master.container) {
+    vtg::log$debug(glue::glue("Running `pss` in master container using image '{image.name}'"))
+    result <- client$call("pss", model, stratum, trimming)
+    return(result)
+  }
+  
 
   vtg::log$debug("Pred")
 

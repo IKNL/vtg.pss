@@ -1,7 +1,7 @@
 RPC_pred <- function(df, model, trimming=FALSE){
 
  
-  vtg::log$debug(model)
+  vtg::log$debug("Testing")
   
   #add pr_score
   pred <- predict(model, newdata=df, type = 'response')
@@ -19,7 +19,7 @@ RPC_pred <- function(df, model, trimming=FALSE){
   
   temp_folder = Sys.getenv("TEMPORARY_FOLDER")
   temp_file = file.path(temp_folder, "filtered_df.R")
-  vtg::log$debug("Writing to {temp_file}")
+  vtg::log$debug(glue::glue("Writing to {temp_file}"))
   saveRDS(df, file=temp_file)
   
   return(list(pr_scores, print(paste("Removed",trimmed,"observations"))))
