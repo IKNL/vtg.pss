@@ -1,9 +1,19 @@
-pss.mock <- function(model, statum, trimming) {
+pss.mock <- function(model, stratum, trimming) {
   
-  datasets <- list(read.csv("./src/data/data_user1.csv"), read.csv("./src/data/data_user2.csv"),read.csv("./src/data/data_user3.csv"))
+  datasets <- list(read.csv("./src/data/norway.csv"), read.csv("./src/data/netherlands.csv"))
   
   client <- vtg::MockClient$new(datasets, "vtg.pss")
-  results <- pss(client, model, statum, trimming)
+  client$use.master.container = FALSE
+  
+  types=NULL
+  model <- vtg.pss::dglm.mock(formula = country ~ age + educ + black + hispan + married + nodegree, family = "binomial", types=types)
+  model <- vtg.pss::as.GLM(model)
+  
+  vtg::log$warn("PSS ---------------------------------------------")
+  
+  results <- vtg.pss::pss(client, model, stratum, trimming)
 }
 
-# pss.mock(formula = num_awards ~ prog + math,family=poisson,tol= 1e-08,maxit=25)
+# glm_model <- ReadRDS("./src/data/model.model")
+# model <- vtg.glm::dglm.mock(formula = country ~ age + educ + black + hispan + married + nodegree, family = "binomial")
+# vtg.pss:pss.mock(glm_model, 3, FALSE)

@@ -16,6 +16,7 @@ echo:
 	@echo "  image name: ${IMAGE}"
 	@echo "         tag: ${TAG}"
 	@echo "         pwd: ${PWD}"
+	@echo "        host: ${HOST}"
 	@echo ""
 
 build: install-deps document
