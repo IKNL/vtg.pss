@@ -1,4 +1,10 @@
-RPC_strata <- function(df, quantiles, stratum){
+RPC_strata <- function(df, quantiles, stratum, types){
+  
+  vtg::log$debug("RPC_strata")
+  if(!is.null(types)){
+    df=Format_Data(df,types)
+  }
+  
   
   # load dataset from previous set from the temporary volume
   vtg::log$debug("RPC_stata: Reading dataframe")

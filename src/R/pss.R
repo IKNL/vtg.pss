@@ -1,4 +1,4 @@
-pss <- function(client, model, stratum, trimming){
+pss <- function(client, model, stratum, trimming, types){
 
   USE_VERBOSE_OUTPUT <- getOption('vtg.verbose_output', T)
   lgr::threshold("debug")
@@ -13,7 +13,7 @@ pss <- function(client, model, stratum, trimming){
   # Run in a MASTER container
   if (client$use.master.container) {
     vtg::log$debug(glue::glue("Running `pss` in master container using image '{image.name}'"))
-    result <- client$call("pss", model, stratum, trimming)
+    result <- client$call("pss", model, stratum, trimming, types)
     return(result)
   }
   
@@ -22,7 +22,7 @@ pss <- function(client, model, stratum, trimming){
 
 
   #calculate propensity scores and add to the existing dataframes
-  pr_scores <- client$call("pred", model=model, trimming=trimming)
+  pr_scores <- client$call("pred", model=model, trimming=trimming, types=types)
 
   # pred1 <- predict(as.GLM(M_2), newdata=df1, type="response") #federated, done on a node
   # df1$pr_score=pred1
@@ -46,6 +46,6 @@ pss <- function(client, model, stratum, trimming){
   q=quantile(prs, seq(0,1,by=1/stratum))
   print(q)
   vtg::log$debug("Master: Strata")
-  out <- client$call("strata", quantiles=q, stratum=stratum)
+  out <- client$call("strata", quantiles=q, stratum=stratum, types=types)
   return(out)
 }

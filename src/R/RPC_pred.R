@@ -1,7 +1,10 @@
-RPC_pred <- function(df, model, trimming=FALSE){
+RPC_pred <- function(df, model, trimming=FALSE, types=NULL){
 
- 
   vtg::log$debug("RPC_pred")
+  
+  if(!is.null(types)){
+    df=Format_Data(df,types)
+  }
   
   #add pr_score
   pred <- predict(model, newdata=df, type = 'response')
