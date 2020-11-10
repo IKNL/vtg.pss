@@ -1,5 +1,7 @@
 pss <- function(client, model, stratum, trimming, types){
 
+  
+  
   USE_VERBOSE_OUTPUT <- getOption('vtg.verbose_output', T)
   lgr::threshold("debug")
   
@@ -13,9 +15,9 @@ pss <- function(client, model, stratum, trimming, types){
   # Run in a MASTER container
   if (client$use.master.container) {
     vtg::log$debug(glue::glue("Running `pss` in master container using image '{image.name}'"))
-    client$use.master.container = F
-    result <- vtg.pss::pss(client, model, stratum, trimming, types)
-    # result <- client$call("pss", model=model, stratum=stratum, trimming=trimming, types=types)
+    # client$use.master.container = F
+    # result <- vtg.pss::pss(client, model, stratum, trimming, types)
+    result <- client$call("pss", model, stratum, trimming, types)
     return(result)
   }
   
