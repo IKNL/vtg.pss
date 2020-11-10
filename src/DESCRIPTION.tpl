@@ -1,6 +1,6 @@
 Package: {{PKG_NAME}}
 Type: Package
-Version: 0.1.0
+Version: 0.1.1
 Title: Propensity Score Stratafication for the vantage6 infrastructure
 Description: This package can be used with the vantage6 federated
     learning infrastructure (see https://github.com/IKNL/vantage6).
