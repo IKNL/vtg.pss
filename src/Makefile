@@ -69,6 +69,7 @@ docker-build:
 	# Build the docker image containing the local algorithm
 	# docker build --no-cache -f docker/Dockerfile -t $IMAGE:$TAG -t $HOST/$IMAGE:$TAG .
 	docker build \
+		--no-cache \
 	  -f ../docker/Dockerfile \
 	   --build-arg PKG_NAME=${PKG_NAME} \
 	  -t ${IMAGE}:${TAG} \

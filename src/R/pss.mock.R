@@ -3,7 +3,7 @@ pss.mock <- function(model, stratum, trimming) {
   datasets <- list(read.csv("./src/data/norway.csv"), read.csv("./src/data/netherlands.csv"))
   
   client <- vtg::MockClient$new(datasets, "vtg.pss")
-  client$use.master.container = TRUE
+  client$use.master.container = FALSE
   
   types=NULL
   model <- vtg.pss::dglm.mock(formula = country ~ age + educ + black + hispan + married + nodegree, family = "binomial", types=types)
@@ -16,4 +16,4 @@ pss.mock <- function(model, stratum, trimming) {
 
 # glm_model <- ReadRDS("./src/data/model.model")
 # model <- vtg.glm::dglm.mock(formula = country ~ age + educ + black + hispan + married + nodegree, family = "binomial")
-# vtg.pss:pss.mock(glm_model, 3, FALSE)
+vtg.pss::pss.mock("", 5, trimming=35)

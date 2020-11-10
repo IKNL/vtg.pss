@@ -1,11 +1,11 @@
 RPC_strata <- function(df, quantiles, stratum, types){
-  
+
   vtg::log$debug("RPC_strata")
   if(!is.null(types)){
     df=Format_Data(df,types)
   }
-  
-  
+
+
   # load dataset from previous set from the temporary volume
   vtg::log$debug("RPC_stata: Reading dataframe")
   temp_folder = Sys.getenv("TEMPORARY_FOLDER")
@@ -14,12 +14,12 @@ RPC_strata <- function(df, quantiles, stratum, types){
 
   vtg::log$debug("RPC_stata: Computing groups")
   df$strata = cut(df$pr_score, breaks = quantiles, labels = 1:stratum, include.lowest = TRUE)
-  
+
   # write new dataframe (containing the new catergory column)
   vtg::log$debug("RPC_stata: Writing to temporary directory")
   temp_file = file.path(temp_folder, "filtered_df_local.R")
   saveRDS(df, file=temp_file)
-  
+
   # Some (specific) analysis specific for Dave's master thesis
   vtg::log$debug("RPC_stata: Specific Dave analysis")
   res <- matrix(nrow = 5, ncol = 5)
@@ -33,7 +33,7 @@ RPC_strata <- function(df, quantiles, stratum, types){
     x = x + 1
     if (x > 5) break
   }
-  
+
   vtg::log$debug("RPC_stata: Reformatting results")
   print(res)
   rows = c("eus6a", "eus6b", "eus9a", "eus9c", "eus10a")
@@ -45,7 +45,7 @@ RPC_strata <- function(df, quantiles, stratum, types){
   vtg::log$debug("RPC_stata: Returning results")
   print(colMeans(res))
   return(colMeans(res))
-  
+
 
 }
 

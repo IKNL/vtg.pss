@@ -40,8 +40,26 @@ print( client$getCollaborations() )
 # Select a collaboration
 client$setCollaborationId(1)
 
+# PSS algorithm only works with master container as it is making using of the local temporary volumes.
+client$use.master.container = T
+
+# Specify column types
+types=list(diagyear=list(type='factor',levels=c("2017","2018")),
+           grade=list(type='factor',levels=c(1:3,9)),
+           hist=list(type='factor',levels=c("Ductal", "Lobulair", "Other")),
+           pT=list(type='factor',levels=c(1:4, "Unknown", "X")),
+           pN=list(type='factor',levels=c(0:3, "Unknown", "X")),
+           her2=list(type='factor',levels=c("Negative", "Positive", "Unknown")),
+           er=list(type='factor',levels=c("Negative", "Positive", "Unknown")),
+           pr=list(type='factor',levels=c("Negative", "Positive", "Unknown")))
+           
+
 # vtg.dglm contains the function `dglm`.
-model <- vtg.glm::dglm(client, formula = num_awards ~ prog + math, family="poisson",tol= 1e-08,maxit=25)
-glm_model <- glmm = vtg.pss::as.GLM(model)
-vtg.pss::pss(client, glm_model, 3, FALSE)
+model <- vtg.glm::dglm(client, formula = num_awards ~ prog + math, family="poisson",tol= 1e-08,maxit=25, types=types)
+glm_model <- vtg.pss::as.GLM(model)
+
+
+# PSS 
+vtg.pss::pss(client, glm_model, 3, FALSE, types)
+
 ```
