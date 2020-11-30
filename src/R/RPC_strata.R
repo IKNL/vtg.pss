@@ -22,7 +22,7 @@ RPC_strata <- function(df, quantiles, stratum, types){
 
   # Some (specific) analysis specific for Dave's master thesis
   vtg::log$debug("RPC_stata: Specific Dave analysis")
-  res <- matrix(nrow = 5, ncol = 5)
+  res <- matrix(nrow = stratum, ncol = 5)
   x <- 1
   repeat{
     res[x,1] = qualityindicator(df[df$strata == x,], variable = "eus6a") #ik pak telkens van de lijst out, de aparte dataframes
@@ -31,7 +31,7 @@ RPC_strata <- function(df, quantiles, stratum, types){
     res[x,4] = qualityindicator(df[df$strata == x,], variable = "eus9c")
     res[x,5] = qualityindicator(df[df$strata == x,], variable = "eus10a")
     x = x + 1
-    if (x > 5) break
+    if (x > stratum) break
   }
 
   vtg::log$debug("RPC_stata: Reformatting results")
@@ -39,7 +39,7 @@ RPC_strata <- function(df, quantiles, stratum, types){
   rows = c("eus6a", "eus6b", "eus9a", "eus9c", "eus10a")
   res <- as.data.frame(res)
   colnames(res) <- rows
-  row.names(res) <- c("1", "2", "3", "4", "5")
+  row.names(res) <- c(1:stratum)
   print(res)
   #END RESULTS |  AVERAGE TREATMENT EFFECT
   vtg::log$debug("RPC_stata: Returning results")
